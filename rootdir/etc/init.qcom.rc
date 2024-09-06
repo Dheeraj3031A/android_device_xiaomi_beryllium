@@ -57,6 +57,25 @@ on init
     chown system camera /dev/mi-camera-hal2vendor
     chmod 0660 /dev/mi-camera-vendor2hal
     chmod 0660 /dev/mi-camera-hal2vendor
+    
+    # Change permissions for /dev/diag
+    chmod 0666 /dev/diag
+
+    # Property used by pointing to thermal-engine config file
+    setprop vendor.thermal.vr_mode -novr
+    setprop vendor.thermal.hw_mode -prod
+    setprop vendor.thermal.config "thermal_info_config.json"
+
+    # Change permissions for /dev/diag
+    chmod 0666 /dev/diag
+
+on late-init
+    # Start services for bootanim
+    start surfaceflinger
+    start bootanim
+    start vendor.hwcomposer-2-3
+    start vendor.configstore-hal
+    start vendor.qti.hardware.display.allocator
 
 on fs
     wait /dev/block/platform/soc/1d84000.ufshc
@@ -65,7 +84,6 @@ on fs
     mkdir /mnt/vendor/persist 0771 root system
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
-    swapon_all /vendor/etc/fstab.qcom
     restorecon_recursive /mnt/vendor/persist
     mkdir /mnt/vendor/persist/audio 0755 system system
     mkdir /mnt/vendor/persist/data 0700 system system
@@ -78,6 +96,9 @@ on post-fs
     setrlimit 8 67108864 67108864
 
     write /dev/ipa 1
+
+    # make the selinux kernel policy world-readable
+    chmod 0444 /sys/fs/selinux/policy
 
 on early-boot
     # Set RLIMIT_MEMLOCK to 64MB
@@ -318,14 +339,6 @@ on post-fs-data
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
-    # Create port-bridge log dir
-    mkdir /data/vendor/port_bridge 0770 radio radio
-    chmod 0770 /data/vendor/port_bridge
-
-    # Create netmgr log dir
-    mkdir /data/vendor/netmgr 0770 radio radio
-    chmod 0770 /data/vendor/netmgr
-
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
     chown radio radio /data/vendor/connectivity
@@ -410,6 +423,9 @@ on post-fs-data
     # Create vpp directory
     mkdir /data/vendor/vpp 0770 media media
 
+    # Default enable uicc_se
+    setprop persist.vendor.radio.uicc_se_enabled true
+
     # Create dir for TUI
     mkdir /data/vendor/tui 0700 system system
 
@@ -472,7 +488,13 @@ on property:sys.boot_completed=1
     write /sys/block/sdf/queue/nr_requests 128
     write /sys/block/sdf/queue/iostats 1
 
+    # Enable ZRAM
+    swapon_all /vendor/etc/fstab.qcom
+
     start qcom-post-boot
+
+    # Enable suspend to RAM
+    write /sys/power/mem_sleep "deep"
 
 # corefile limit
 on property:persist.debug.trace=1
@@ -499,15 +521,6 @@ service vendor.rmt_storage /vendor/bin/rmt_storage
 service vendor.tftp_server /vendor/bin/tftp_server
    class core
    user root
-
-service vendor.port-bridge /system/vendor/bin/port-bridge
-    class main
-    user radio
-    group radio system inet
-    oneshot
-
-service vendor.netmgrd /system/vendor/bin/netmgrd
-    class main
 
 service vendor.sensors /vendor/bin/sscrpcd sensorspd
     class early_hal
@@ -583,31 +596,8 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/m
 on property:vendor.display.lcd_density=*
     setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
-service vendor.vppservice /vendor/bin/vppservice
-    class main
-    user media
-    group camera
-
-service time_daemon /vendor/bin/time_daemon
-    class main
-    user system
-    group system
-    capabilities SYS_TIME
-
 on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
-
-service seemp_healthd /vendor/bin/seemp_healthd
-    class late_start
-    user system
-    group system
-
-service chre /vendor/bin/chre
-    class late_start
-    user system
-    group system
-    socket chre seqpacket 0660 root system
-    shutdown critical
 
 # Set GPU OpenGL ES version
 on property:vendor.opengles.version=*
@@ -673,14 +663,25 @@ service spdaemon /vendor/bin/spdaemon
     user system
     group system
 
-service thermal-engine /system/vendor/bin/thermal-engine
-    class main
-    user root
-    socket thermal-send-client stream 0666 system system
-    socket thermal-recv-client stream 0660 system system
-    socket thermal-recv-passive-client stream 0666 system system
-    socket thermal-send-rule stream 0660 system system
-    group root
+# reset thermal-engine when changed profile
+on property:vendor.thermal.vr_mode=*
+    restart vendor.thermal-engine
+
+service vendor.thermal-engine /vendor/bin/thermal-engine -c /vendor/etc/thermal-engine-${ro.hardware}${vendor.thermal.vr_mode}${vendor.thermal.hw_mode}.conf
+   class main
+   user root
+   group root system
+   socket thermal-send-client stream 0666 system system
+   socket thermal-recv-client stream 0660 system system
+   socket thermal-recv-passive-client stream 0666 system system
+
+service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.pixel
+    override
+    class hal
+    user system
+    group system
+    priority -20
+    disabled
 
 service ppd /vendor/bin/mm-pp-dpps
     class late_start
@@ -706,3 +707,12 @@ on property:init.svc.vendor.hwcomposer-2-3=running
 
 on property:init.svc.vendor.hwcomposer-2-3=restarting
     stop ppd
+
+on property:init.svc.cnss_diag=running
+    stop cnss_diag
+
+on property:init.svc.tcpdump=running
+    stop tcpdump
+
+on property:init.svc.vendor.ipacm-diag=running
+    stop vendor.ipacm-diag

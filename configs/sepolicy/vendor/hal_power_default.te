@@ -1,0 +1,12 @@
+allow hal_power_default input_device:dir r_dir_perms;
+allow hal_power_default input_device:chr_file rw_file_perms;
+
+# To do powerhint on nodes defined in powerhint.json
+allow hal_power_default device_latency:chr_file rw_file_perms;
+
+# Kernelspace battery saver
+allow hal_power_default sysfs_battery_saver:dir r_dir_perms;
+allow hal_power_default sysfs_battery_saver:file rw_file_perms;
+
+# Powerhal
+allow hal_power_default proc:file { open read write create };
