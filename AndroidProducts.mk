@@ -14,4 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_beryllium.mk
+    $(LOCAL_DIR)/pixelage_beryllium.mk
+
+COMMON_LUNCH_CHOICES := \
+    pixelage_beryllium-user \
+    pixelage_beryllium-userdebug \
+    pixelage_beryllium-eng
