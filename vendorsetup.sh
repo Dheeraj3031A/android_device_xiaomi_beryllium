@@ -4,7 +4,7 @@ git clone https://github.com/Dheeraj3031A/proprietary_vendor_xiaomi_beryllium.gi
 
 # Kernel Tree
 rm -rf kernel/xiaomi/beryllium
-git clone https://github.com/Dheeraj3031A/kernel_xiaomi_beryllium.git -b 14.0 kernel/xiaomi/beryllium --depth=1
+git clone https://github.com/Dheeraj3031A/kernel_xiaomi_beryllium.git -b 14.0-ksu kernel/xiaomi/beryllium --depth=1
 
 # MiCam
 rm -rf vendor/miuicamera
