@@ -169,6 +169,7 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-service \
     gralloc.sdm845 \
     hwcomposer.sdm845 \
+    libgui_vendor \
     libdisplayconfig.qti \
     libdisplayconfig.system.qti \
     libqdMetaData \
