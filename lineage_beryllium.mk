@@ -20,11 +20,11 @@ TARGET_BOOT_ANIMATION_RES := 1080
 
 PRODUCT_SYSTEM_NAME := beryllium
 
-BUILD_FINGERPRINT := "Xiaomi/beryllium/beryllium:10/QKQ1.190828.002/V12.0.3.0.QEJMIXM:user/release-keys"
-
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc=$(call normalize-path-list, beryllium-user 10 QKQ1.190828.002 V12.0.3.0.QEJMIXM release-keys") \
-    DeviceProduct=beryllium
+    BuildDesc=$(call normalize-path-list, "beryllium-user 10 QKQ1.190828.002 V12.0.3.0.QEJMIXM release-keys") \
+    DeviceProduct=beryllium \
+    DeviceName=beryllium \
+    BuildFingerprint=Xiaomi/beryllium/beryllium:10/QKQ1.190828.002/V12.0.3.0.QEJMIXM:user/release-keys 
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
