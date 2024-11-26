@@ -1,10 +1,10 @@
 # Vendor Tree
 rm -rf vendor/xiaomi/beryllium
-git clone https://github.com/Dheeraj3031A/proprietary_vendor_xiaomi_beryllium.git -b 14.0 vendor/xiaomi/beryllium --depth=1
+git clone https://github.com/Dheeraj3031A/proprietary_vendor_xiaomi_beryllium.git -b 15.0 vendor/xiaomi/beryllium --depth=1
 
 # Kernel Tree
 rm -rf kernel/xiaomi/beryllium
-git clone https://github.com/Dheeraj3031A/kernel_xiaomi_beryllium.git -b 14.0-ksu kernel/xiaomi/beryllium --depth=1
+git clone https://github.com/Dheeraj3031A/kernel_xiaomi_beryllium.git -b 15.0-ksu kernel/xiaomi/beryllium --depth=1
 
 # MiCam
 rm -rf vendor/miuicamera
@@ -12,7 +12,7 @@ git clone https://github.com/Legendleo90/vendor_miuicamera.git -b fourteen vendo
 
 # Hardware
 rm -rf hardware/xiaomi
-git clone https://github.com/LineageOS/android_hardware_xiaomi.git -b lineage-21 hardware/xiaomi
+git clone https://github.com/ProjectBlaze-Reborn/hardware_xiaomi.git -b 15 hardware/xiaomi
 
 # Viper4FX
 rm -rf packages/apps/ViPER4AndroidFX
