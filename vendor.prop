@@ -7,6 +7,7 @@ persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicecomm=true
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.ras.enabled=false
+persist.vendor.audio_hal.dsp_bit_width_enforce_mode=24
 ro.vendor.audio.sdk.fluencetype=fluence
 ro.vendor.audio.sdk.ssr=false
 ro.vendor.audio.soundfx.usb=true
@@ -40,7 +41,7 @@ vendor.audio.feature.hdmi_passthrough.enable=true
 vendor.audio.feature.hfp.enable=true
 vendor.audio.feature.hifi_audio.enable=false
 vendor.audio.feature.hwdep_cal.enable=false
-vendor.audio.feature.incall_music.enable=false
+vendor.audio.feature.incall_music.enable=true
 vendor.audio.feature.keep_alive.enable=false
 vendor.audio.feature.kpi_optimize.enable=true
 vendor.audio.feature.maxx_audio.enable=false
@@ -59,11 +60,11 @@ vendor.audio.feature.wsa.enable=false
 vendor.audio.flac.sw.decoder.24bit=true
 vendor.audio_hal.in_period_size=144
 vendor.audio.hal.output.suspend.supported=false
-vendor.audio_hal.period_size=192
+vendor.audio_hal.period_size=240
 vendor.audio_hal.period_multiplier=3
 vendor.audio.hw.aac.encoder=false
 vendor.audio.noisy.broadcast.delay=600
-vendor.audio.offload.buffer.size.kb=32
+vendor.audio.offload.buffer.size.kb=256
 vendor.audio.offload.gapless.enabled=true
 vendor.audio.offload.multiaac.enable=true
 vendor.audio.offload.multiple.enabled=true
@@ -79,6 +80,7 @@ vendor.audio.use.sw.ape.decoder=true
 
 # Bluetooth
 bluetooth.device.class_of_device=90,2,12
+bluetooth.device.default_name=Xiaomi Pocophone F1
 bluetooth.hardware.power.operating_voltage_mv=3300
 bluetooth.profile.a2dp.source.enabled?=true
 bluetooth.profile.asha.central.enabled?=true
@@ -103,7 +105,7 @@ persist.vendor.qcom.bluetooth.twsp_state.enabled=false
 vendor.qcom.bluetooth.soc=cherokee
 
 # Camera
-vendor.camera.aux.packagelist=com.android.camera,org.codeaurora.snapcam,org.lineageos.aperture,org.lineageos.aperture.dev
+vendor.camera.aux.packagelist=com.android.camera,org.lineageos.aperture,org.pixelexperience.faceunlock
 
 # Charger
 ro.charger.enable_suspend=true
@@ -120,6 +122,7 @@ ro.crypto.volume.filenames_mode=aes-256-cts
 
 # Display post-processing
 ro.vendor.display.cabl=2
+vendor.display.enable_default_color_mode=1
 
 # DPM
 persist.vendor.dpm.idletimer.mode=default
@@ -127,6 +130,9 @@ persist.vendor.dpmhalservice.enable=1
 
 # DRM
 drm.service.enabled=true
+
+# FM
+vendor.hw.fm.init=0
 
 # FRP
 ro.frp.pst=/dev/block/bootdevice/by-name/frp
@@ -142,6 +148,10 @@ ro.opengles.version=196610
 persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
 persist.dbg.wfc_avail_ovr=1
+persist.vendor.ims.disableADBLogs=1
+persist.vendor.ims.disableDebugLogs=1
+persist.vendor.ims.disableIMSLogs=1
+persist.vendor.ims.disableQXDMLogs=1
 
 # Listen
 ro.audio.soundtrigger=sva
@@ -173,12 +183,10 @@ ro.telephony.iwlan_operation_mode=legacy
 # Perf
 ro.vendor.extension_library=libqti-perfd-client.so
 
-# Radio
-persist.vendor.radio.enableadvancedscan=false
-
 # USB
 vendor.usb.diag.func.name=diag
 vendor.usb.dpl.inst.name=dpl
+vendor.usb.product_string=Xiaomi Pocophone F1
 vendor.usb.qdss.inst.name=qdss
 vendor.usb.rmnet.func.name=gsi
 vendor.usb.rmnet.inst.name=rmnet
