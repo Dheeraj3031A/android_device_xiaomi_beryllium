@@ -128,6 +128,10 @@ PRODUCT_PACKAGES += \
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Extras
+$(call inherit-product, vendor/bcr/bcr.mk)
+$(call inherit-product-if-exists, vendor/miuicamera/config.mk)
+
 # fastbootd
 PRODUCT_PACKAGES += \
     fastbootd
