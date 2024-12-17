@@ -7,10 +7,10 @@
 $(call inherit-product, device/xiaomi/beryllium/device.mk)
 
 # Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/phoenix/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := lineage_beryllium
+PRODUCT_NAME := phoenix_beryllium
 PRODUCT_DEVICE := beryllium
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := POCO F1
@@ -29,12 +29,8 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 # Matrixx
-MATRIXX_BUILD_TYPE := Official
-MATRIXX_MAINTAINER := NotDheeraj06
-MATRIXX_CHIPSET := SDM845
-MATRIXX_BATTERY := 4000mAh
-MATRIXX_DISPLAY := 1080x2246
+PHOENIX_BUILD_TYPE := Official
+PHOENIX_MAINTAINER := NotDheeraj06
 
 # GAPPS and Extras
 WITH_GMS := true
-BUILD_GOOGLE_DIALER := true
