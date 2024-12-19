@@ -14,4 +14,4 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/blaze_beryllium.mk
+    $(LOCAL_DIR)/flare_beryllium.mk
