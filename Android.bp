@@ -2,7 +2,6 @@ soong_namespace {
     imports: [
         "bootable/deprecated-ota",
         "hardware/google/interfaces",
-        "hardware/qcom-caf/common/libqti-perfd-client",
         "hardware/google/pixel",
         "hardware/xiaomi",
     ],
