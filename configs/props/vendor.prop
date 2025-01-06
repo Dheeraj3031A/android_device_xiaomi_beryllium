@@ -134,9 +134,6 @@ drm.service.enabled=true
 # FM
 vendor.hw.fm.init=0
 
-# FRP
-ro.frp.pst=/dev/block/bootdevice/by-name/frp
-
 # Graphics
 ro.hardware.egl=adreno
 ro.hardware.vulkan=adreno
