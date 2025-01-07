@@ -6,11 +6,11 @@
 
 $(call inherit-product, device/xiaomi/beryllium/device.mk)
 
-# Inherit some common Project Flare stuff.
-$(call inherit-product, vendor/flare/config/common_full_phone.mk)
+# Inherit some common MistOS stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := flare_beryllium
+PRODUCT_NAME := lineage_beryllium
 PRODUCT_DEVICE := beryllium
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := POCO F1
@@ -28,8 +28,8 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-# Project Flare Stuff
-FLARE_BUILD_TYPE := OFFICIAL
-FLARE_MAINTAINER := NotDheeraj06
+# MistOS Stuff
+TARGET_EXCLUDES_AUDIOFX := true
+MISTOS_MAINTAINER := NotDheeraj06
 TARGET_SUPPORTS_BLUR := false
-WITH_GAPPS := true
+WITH_GMS := true
